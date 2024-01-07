@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 const app = express();
 export default app;
 app.use(bodyParser.json());
-const port = 3000;
+const port = 3001;
 
 // Helper functions
 export function isPalindrome(number: { toString: () => any; }) {
@@ -40,7 +40,7 @@ app.post('/api/numbers', (req, res) => {
         return res.status(400).send({ error: 'Invalid input' });
     }
 
-    const startTime = process.hrtime.bigint();
+    const start = process.hrtime();
 
     function findNumbers(minNumber: any, maxNumber: number, features: any) {
         const result = [];
@@ -71,8 +71,9 @@ app.post('/api/numbers', (req, res) => {
     const result: number[] = findNumbers(minNumber,maxNumber,feature);
 
     // Send response
-    const endTime = process.hrtime.bigint();
-    const timeOfExecution = Number(endTime - startTime) / 1e6; // convert nanoseconds to milliseconds
+    const [seconds, nanoseconds] = process.hrtime(start);
+    const timeOfExecution = seconds + nanoseconds / 1e9;
+
     res.send({ data: result, timeOfExecution });
 });
 
