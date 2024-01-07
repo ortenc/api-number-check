@@ -67,7 +67,7 @@ app.post('/api/numbers', (req, res) => {
     
         return result;
     }
-    const result: never[] = [];
+    const result: number[] = findNumbers(minNumber,maxNumber,feature);
 
     // Send response
     const endTime = process.hrtime.bigint();
