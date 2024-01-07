@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 const app = express();
 export default app;
 app.use(bodyParser.json());
+const port = 3000;
 
 // Helper functions
 export function isPalindrome(number: { toString: () => any; }) {
@@ -73,4 +74,8 @@ app.post('/api/numbers', (req, res) => {
     const endTime = process.hrtime.bigint();
     const timeOfExecution = Number(endTime - startTime) / 1e6; // convert nanoseconds to milliseconds
     res.send({ data: result, timeOfExecution });
+});
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
